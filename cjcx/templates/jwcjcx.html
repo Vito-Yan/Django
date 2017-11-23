@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <title>YUOL成绩查询系统</title>
+    <style type="text/css">
+        #border {
+            margin: 0 auto;
+            width: 500px;
+            min-height: 500px;
+            background-color: #FFFFFF;
+            border: 1px solid #000000;
+        }
+
+        #button {}
+    </style>
+</head>
+
+<body style="text-align:center">
+    <div id="border">
+        <h1>YUOL成绩查询系统</h1><br/>
+        <form action="{% url 'cjcx:search_action' %}" method="post">{% csrf_token %} 账号：
+            <input type="text" id="xuehao" name="Sno" /><br/> 密码：
+            <input type="password" id="pwd" name="Spwd" /><br/><br/>
+            <input type="submit" value="查询" id="submit" /><br/>
+            <div style="text-align:left;padding-left:50px;">
+                -----------------------------------------------------------<br/> 
+                姓名：{{ student.Sname }}<br/>
+                 学号：{{ student.Sno}}<br/>
+                  班级：{{ student.Sdept }}<br/>
+            </div>
+            -----------------------------------------------------------<br/>
+            <div>
+               &nbsp;&nbsp; &nbsp;&nbsp;
+                <br/>
+                <div style="display:inline-block;width:200px;">
+                   <b>  科目：</b><br/><br/>
+					{% for sc in sc %}
+                    {{ sc.Cname }}<br/>
+					-------------------<br/>
+					{% endfor %}
+                </div>
+                <div style="display:inline-block;width:100px;">
+                   <b> 成绩：</b><br/><br/>
+					{% for sc in sc %}
+                    {{ sc.Grade }}<br/>
+					------<br/>
+					{% endfor %}
+                </div>
+                <div style="display:inline-block;width:150px;">
+                    <b> 学分：</b><br/><br/>
+					{% for course in course %}
+                    {{ course.Credit }}
+					{% endfor %}
+                </div>
+
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
