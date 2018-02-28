@@ -11,6 +11,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+#连接数据库
 conn= MySQLdb.connect(
         host='localhost',
         port = 3306,
@@ -20,6 +21,8 @@ conn= MySQLdb.connect(
 		charset='utf8'
         )   
 cur = conn.cursor()
+
+#模拟登陆
 username = raw_input("账号")
 password = raw_input("密码")
 driver = webdriver.PhantomJS();
@@ -41,7 +44,9 @@ Sdept =  str(soup.find(id="lbBj").getText())
 Student = (Sno,Sname,Sdept,'12345678')
 sql = "insert into cjcx_student values(%s,%s,%s,%s)" 
 cur.execute(sql,Student)
+
 #id = 0
+#解析表格结构，数据入库
 tables = soup.findAll("table")
 for tab in tables[1:2]:
     for tr in tab.findAll("tr")[1:]:
@@ -71,6 +76,7 @@ for tab in tables[1:2]:
 					cur.execute(sql,Course)
 				else:
 					continue
+#提交数据，关闭数据库链接
 conn.commit()
 cur.close()
 conn.close()
